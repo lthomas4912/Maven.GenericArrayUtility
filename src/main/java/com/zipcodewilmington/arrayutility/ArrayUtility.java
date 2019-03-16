@@ -1,6 +1,8 @@
 package com.zipcodewilmington.arrayutility;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by leon on 3/6/18.
@@ -8,23 +10,16 @@ import java.util.Arrays;
 public class ArrayUtility <T> {
 
     private T[] array;
-    private T count;
+
 
     public ArrayUtility(T[] objectArray){
         this.array = objectArray;
     }
 
 
-    public Integer countDuplicatesInMerge(T[] arrayToAdd, T valueToEvaluate){
-        int count = 0;
-        T [] arrayToMerge = mergeArray(array,arrayToAdd);
-        for(T something : arrayToMerge){
-            if(getNumberOfOccurrences(valueToEvaluate)== something){
-                arrayToMerge[count] = something;
-                count++;
-            }
-        }
-        return count;
+    public Integer countDuplicatesInMerge(T[] arraysToMerge, T valueToEvaluate) {
+        array = mergeArray(arraysToMerge);
+        return getNumberOfOccurrences(valueToEvaluate);
     }
 
     public T getMostCommonFromMerge(T[] arrayToMerge){
@@ -48,21 +43,19 @@ public class ArrayUtility <T> {
         return count;
     }
 
-    public T[] mergeArray( T[] newArray, T[] arrayToAdd) {
-        int newLength = newArray.length + arrayToAdd.length;
-        T[] otherArray = Arrays.copyOf(newArray,newLength);
-        int mergedIndex = otherArray.length;
-        for(int i = 0; i < arrayToAdd.length; i++){
-            otherArray[mergedIndex] = arrayToAdd[i];
-            mergedIndex++;
+      public T[] mergeArray(T[] arrayToMerge) {
+        T[] answer = Arrays.copyOf(array, array.length + arrayToMerge.length);
+        for (int i = 0; i < array.length ; i++) {
+            answer[i] = array[i];
         }
-        return otherArray;
+        for (int i = array.length, j = 0; i < answer.length; i++, j++) {
+            answer[i] = arrayToMerge[j];
+        }
+        return answer;
     }
 
 
-
-
-    public T[] removeValue( T valueToRemove) {
+      public T[] removeValue( T valueToRemove) {
 
         T[] result = array.clone();
         int index = 0;
@@ -73,12 +66,6 @@ public class ArrayUtility <T> {
             }
         }return Arrays.copyOfRange(result, 0, index);
     }
-
-//    public T[] getArray(T[] array){
-//
-//        T[] arr = (T[]) Array.newInstance(array.getClass().getComponentType(), 10);
-//        return arr;
-//    }
 
 
 
